@@ -41,4 +41,3 @@ public class Rq {
             return urlBits[0];
         }
     }
-}
