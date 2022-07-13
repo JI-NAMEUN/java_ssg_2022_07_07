@@ -16,7 +16,7 @@ public class App {
 
         outer:
         while (true) {
-            System.out.println("명령");
+            System.out.println("명령)");
             String cmd = sc.nextLine().trim();
 
             switch (cmd) {
@@ -28,7 +28,7 @@ public class App {
                     int id = ++wiseSayingLastId; //명언글 마다 저장
 
                     WiseSaying wiseSaying = new WiseSaying(id, content, author);
-                    System.out.println(wiseSaying);
+                    wiseSayings.add(wiseSaying);
 
                     System.out.printf("%d번 명령이 등록되었습니다.\n", id);
                     break;
