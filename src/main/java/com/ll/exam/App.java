@@ -28,7 +28,7 @@ public class App {
                     int id = ++wiseSayingLastId; //명언글 마다 저장
 
                     WiseSaying wiseSaying = new WiseSaying(id, content, author);
-                    wiseSayings.add(wiseSaying);
+                    System.out.println(wiseSaying);
 
                     System.out.printf("%d번 명령이 등록되었습니다.\n", id);
                     break;

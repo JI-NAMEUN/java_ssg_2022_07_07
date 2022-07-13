@@ -2,8 +2,7 @@ package com.ll.exam;
 
 import org.junit.jupiter.api.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
+import java.io.*;
 import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -16,7 +15,7 @@ public class AppTest {
     }
 
     @Test
-    public void 테스트_스캐너() { //명령어 미리 입력
+    public void 문자열을_스캐너의_입력으로_설정() { //명령어 미리 입력
         String input = """
                 등록
                 명언1
@@ -24,7 +23,7 @@ public class AppTest {
                 """.stripIndent(); //앞공간 없애줌
         InputStream in = new ByteArrayInputStream(input.getBytes());
         Scanner sc = new Scanner(in); //system.in은 키보드로 입력해야 함, in은 자동으로 문자열이 들어감
-
+//적당한 입력을 다 받아줌
         String cmd = sc.nextLine().trim();
         String content = sc.nextLine().trim();
         String author = sc.nextLine().trim();
@@ -33,5 +32,21 @@ public class AppTest {
         assertEquals("등록", cmd);
         assertEquals("명언1", content);
         assertEquals("작가1", author);
+    }
+    @Test
+    public void 표준출력을_리다이렉션하여_결과를_문자열로_받기() throws IOException {
+        // 표준출력을 리다이렉션
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(output));
+
+        System.out.println("안녕"); //output 에 쌓임
+
+        String rs = output.toString().trim(); //to String 으로 출력
+
+        // 표준출력을 원상복구
+        System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
+        output.close();
+
+        assertEquals("안녕", rs);
     }
 }
