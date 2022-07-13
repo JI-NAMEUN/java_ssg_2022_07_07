@@ -33,4 +33,12 @@ public class Rq {
 
         return defaultValue; //없으면 디폴트 값 리턴
     }
+
+//url 두개를 쪼개서 앞에있는 값 리턴함
+        public String getPath() {
+            String[] urlBits = url.split("\\?", 2);
+
+            return urlBits[0];
+        }
+    }
 }
