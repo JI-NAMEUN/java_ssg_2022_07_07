@@ -36,9 +36,12 @@ public class App {
                     break;
                 case "삭제":
                     // URL에 입력된 id 얻기
+                    // 삭제하려는 번호를 입력받는 것 rq.getIntParam 사용
+                    //입력 받으면 id가 받지 않으면 0이 들어옴
                     int paramId = rq.getIntParam("id", 0);
 
                     // URL에 입력된 id가 없다면 작업중지
+                    //0이 들어오면
                     if (paramId == 0) {
                         System.out.println("id를 입력해주세요.");
                         continue;

@@ -8,20 +8,31 @@ package com.ll.exam;
 
 public class Rq {
     String url;
+    String path;
+    String queryStr;
+
 
     public Rq(String url) {
         this.url = url;
+        String[] urlBits = url.split("\\?", 2);
+        this.path = urlBits[0];
+
+        if (urlBits.length == 2) {
+            this.queryStr = urlBits[1];
+        }
     }
 
-    public int getIntParam(String paramName, int defaultValue) { //urlBits url 뒷부분 잘라옴
-        String[] urlBits = url.split("\\?", 2);
-        //limit:2 = split 최대 2개까지 나눠짐
-        //수정? id=1&no=3 을 "\\?"이용해서 수정(줄바뀜) id=1&no=3로 바꿈
-         urlBits = urlBits[1].split("&");
-        //urlBits[0]에는 수정, [1]에는 id=1&no=3 이 들어감
-        //url안에서 &기준으로 나눔 -> id=1 과 no=3으로 나뉨
 
-        for (String urlBit : urlBits) { //2개 들어가 있음음
+    public int getIntParam(String paramName, int defaultValue) { //urlBits url 뒷부분 잘라옴
+
+        if (queryStr == null) {
+            return defaultValue;
+        }
+
+//bits는 조각냈다는 의미
+        String[] bits = queryStr.split("&");
+
+        for (String urlBit : bits) { //2개 들어가 있음
            String[] paramNameAndValue = urlBit.split("=", 2); //=기준으로 나눔
             String paramName_ = paramNameAndValue[0]; //id 들어감
             String paramValue = paramNameAndValue[1]; //1들어감
@@ -34,10 +45,8 @@ public class Rq {
         return defaultValue; //없으면 디폴트 값 리턴
     }
 
-//url 두개를 쪼개서 앞에있는 값 리턴함
+//
         public String getPath() {
-            String[] urlBits = url.split("\\?", 2);
-
-            return urlBits[0];
+            return path;
         }
     }
