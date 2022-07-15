@@ -12,8 +12,8 @@ import java.util.Map;
 public class Rq {
     String url;
     String path;
+    String queryStr;
     Map<String, String> queryParams;
-    private String queryStr;
 
 
     public Rq(String url) {
@@ -61,8 +61,7 @@ public class Rq {
             }
 
 
-        return Integer.parseInt(paramValue);
-        //없으면 디폴트 값 리턴
+        return defaultValue; //없으면 디폴트 값 리턴
     }
 
 //
