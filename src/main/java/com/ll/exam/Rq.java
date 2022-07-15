@@ -6,10 +6,14 @@ package com.ll.exam;
  목표 하나 설정 -> 실패(오류)하기 -> 꼼수를 써서 통과시키기
   */
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Rq {
     String url;
     String path;
-    String queryStr;
+    Map<String, String> queryParams;
+    private String queryStr;
 
 
     public Rq(String url) {
@@ -17,32 +21,48 @@ public class Rq {
         String[] urlBits = url.split("\\?", 2);
         this.path = urlBits[0];
 
+
+        queryParams = new HashMap<>();
         if (urlBits.length == 2) {
-            this.queryStr = urlBits[1];
+            String queryStr = urlBits[1];
+
+            String[] paramBits = queryStr.split("&");
+
+            for (String paramBit : paramBits) {
+                String[] paramNameAndValue = paramBit.split("=", 2);
+
+                if (paramNameAndValue.length == 1) {
+                    continue;
+                }
+
+                String paramName = paramNameAndValue[0].trim();
+                String paramValue = paramNameAndValue[1].trim();
+
+                queryParams.put(paramName, paramValue);
+            }
         }
     }
 
 
     public int getIntParam(String paramName, int defaultValue) { //urlBits url 뒷부분 잘라옴
 
-        if (queryStr == null) {
+        if (queryParams.containsKey(paramName) == false) {
             return defaultValue;
         }
 
 //bits는 조각냈다는 의미
         String[] bits = queryStr.split("&");
+        String paramValue = queryParams.get(paramName);
 
-        for (String urlBit : bits) { //2개 들어가 있음
-           String[] paramNameAndValue = urlBit.split("=", 2); //=기준으로 나눔
-            String paramName_ = paramNameAndValue[0]; //id 들어감
-            String paramValue = paramNameAndValue[1]; //1들어감
 
-            if (paramName.equals(paramName_)) { //두개를 비교
-                return Integer.parseInt(paramValue); //맞으면 리턴
+
+        if (paramValue.length() == 0) {
+            return defaultValue;
             }
-        }
 
-        return defaultValue; //없으면 디폴트 값 리턴
+
+        return Integer.parseInt(paramValue);
+        //없으면 디폴트 값 리턴
     }
 
 //
